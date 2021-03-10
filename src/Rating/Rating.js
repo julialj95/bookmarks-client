@@ -13,7 +13,7 @@ export default function Rating(props) {
   return <div className="rating">{stars}</div>;
 }
 Rating.propTypes = {
-  value: propTypes.oneOf([1, 2, 3, 4, 5]).isRequired,
+  value: propTypes.oneOf(["1", "2", "3", "4", "5"]).isRequired,
 };
 Rating.propTypes = {
   value: (props, propName, componentName) => {
@@ -28,14 +28,14 @@ Rating.propTypes = {
     }
 
     // the prop has a value let's check the type
-    if (typeof prop != "number") {
+    if (typeof prop != "string") {
       return new Error(
         `Invalid prop, ${propName} is expected to be a number in ${componentName}. ${typeof prop} found.`
       );
     }
 
     // the prop is a number let us check the range
-    if (prop < 1 || prop > 5) {
+    if (Number(prop) < 1 || Number(prop) > 5) {
       return new Error(
         `Invalid prop, ${propName} should be in range 1 - 5 in ${componentName}. ${prop} found.`
       );

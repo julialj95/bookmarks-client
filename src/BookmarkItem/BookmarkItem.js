@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Rating from "../Rating/Rating";
 import "./BookmarkItem.css";
 import config from "../config";
@@ -22,7 +23,7 @@ function deleteBookmarkRequest(bookmarkId, callback) {
       }
       return res.json();
     })
-    .then((data) => {
+    .then(() => {
       // call the callback when the request is successful
       // this is where the App component can remove it from state
       callback(bookmarkId);
@@ -47,6 +48,14 @@ export default function BookmarkItem(props) {
           </div>
           <p className="BookmarkItem__description">{props.description}</p>
           <div className="BookmarkItem__buttons">
+            <Link
+              to={`/edit/${props.id}`}
+              // onClick={() => {
+              //   editBookmark(props.id, context.editBookmark);
+              // }}
+            >
+              Edit Bookmark
+            </Link>
             <button
               className="BookmarkItem__description"
               onClick={() => {
@@ -64,7 +73,7 @@ export default function BookmarkItem(props) {
 
 BookmarkItem.defaultProps = {
   onClickDelete: () => {},
-  rating: 1,
+  rating: "1",
   description: "",
 };
 
@@ -96,6 +105,6 @@ BookmarkItem.propTypes = {
       );
     }
   },
-  rating: PropTypes.number,
+  rating: PropTypes.string,
   description: PropTypes.string,
 };

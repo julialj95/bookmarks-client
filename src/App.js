@@ -7,6 +7,7 @@ import Nav from "./Nav/Nav";
 import config from "./config";
 import Rating from "./Rating/Rating";
 import "./App.css";
+import EditBookmark from "./EditBookmark";
 
 class App extends Component {
   state = {
@@ -36,6 +37,15 @@ class App extends Component {
     });
   };
 
+  editBookmark = (editedBookmark) => {
+    const newBookmarks = this.state.bookmarks.map((bm) =>
+      bm.id === editedBookmark.id ? editedBookmark : bm
+    );
+    this.setState({
+      bookmarks: newBookmarks,
+    });
+  };
+
   componentDidMount() {
     fetch(config.API_ENDPOINT, {
       method: "GET",
@@ -59,6 +69,7 @@ class App extends Component {
       bookmarks: this.state.bookmarks,
       addBookmark: this.addBookmark,
       deleteBookmark: this.deleteBookmark,
+      editBookmark: this.editBookmark,
     };
     return (
       <main className="App">
@@ -68,8 +79,9 @@ class App extends Component {
           <div className="content" aria-live="polite">
             <Route path="/add-bookmark" component={AddBookmark} />
             <Route exact path="/" component={BookmarkList} />
+            <Route path="/edit/:bookmarkId" component={EditBookmark} />
           </div>
-          <Rating value={5} />
+          <Rating value={"5"} />
         </BookmarksContext.Provider>
       </main>
     );
